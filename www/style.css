@@ -1,0 +1,101 @@
+body{
+	margin: 0 auto;
+	display: table;
+	width:100%;
+	background-color: black;
+	/* Times New Roman-based stack */
+	font-family: Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif;
+
+	/* Modern Georgia-based serif stack */
+	font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+
+	/* Traditional Garamond-based serif stack */
+	font-family: "Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif;
+
+	/* Helvetica/Arial-based sans serif stack */
+	font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+	/* Verdana-based sans serif stack 
+	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
+	*/
+	/* Trebuchet-based sans serif stack 
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	*/
+	/* Impact-based sans serif stack 
+	font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans-serif;
+	*/
+	/* Monospace stack 
+	font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;*/
+		margin: 0;
+	}
+
+textarea{
+	display:table-cell;
+	width: 81%;
+	margin:0;
+	height: 40px;
+	vertical-align: center;
+    resize: none;
+}
+
+#content{
+	font: 13px "Open Sans", Sans-serif;
+    width:100%;  
+    min-height: 400px;
+    padding-top: 50px;
+	padding-bottom: 40px;
+    background-color: #CDC9C9;
+}
+
+.addtarefa{
+	background-color: white;
+	min-height: 40px;
+	margin: 10px 5px 0px 5px;
+	padding: 5px 5px 5px 5px;
+	box-shadow: 0px 1px 1px #888;
+    width:auto; 
+}
+
+a.press-it-btn {
+	text-decoration: none;	
+	display: block; 
+	margin: 0px 0px 5px 5px;
+	width: 55px; 
+	padding-top: 3px;
+	padding-left: 10px;
+	height: 20px; 
+	box-shadow: 0px 1px 1px #888;
+	background-color:#909090;
+	font-weight:bold;
+	color: white;
+}
+
+a.press-it-btn:active {
+	background-color:#008aaa;
+}
+
+.boxdate{
+	text-decoration: none;	
+	display: block; 
+	margin: 0px 0px 5px 5px;
+	width: 117px; 
+	padding-top: 5px;
+	padding-left: 7px;
+	height: 26px; 
+	box-shadow: 0px 1px 1px #888;
+	background-color:#909090;
+}
+
+input[type="date"]{
+	width: 105px;
+	text-align: center;
+}
+
+.tarefa{
+	background-color: white;
+	min-height: 40px;
+	margin: 10px 5px 5px 5px;
+	padding: 5px 5px 5px 5px;
+	box-shadow: 0px 1px 1px #888;
+    width:auto; 
+}

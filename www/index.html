@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//PT" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<title>Smart Tasks</title>
+	<meta name="description" content="Providing top-level navigation and inputs for the active view">
+	<!--
+	- This <style> and <link> is only used for the example preview,
+	- it isn't needed for the real use case.
+	-->
+	<link rel="stylesheet" href="gaia/widgets/headers.css">
+	<link rel="stylesheet" href="gaia/widgets/toolbars.css">
+    <link rel="stylesheet" href="gaia/widgets/switches.css">
+    <link rel="stylesheet" href="gaia/widgets/buttons.css">
+	<style type="text/css">
+	html, body {
+	margin: 0;
+	padding: 0;
+	font-size: 10px;
+	background-color: #fff;
+	}
+	body {
+	background: none;
+	}
+	section[role="region"] {
+	margin-bottom: 1.5rem;
+	position: relative;
+	}
+	</style>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script>
+	/*
+	alert("ola");
+	if (localStorage.tarefas == null){alert("ola");
+		doc = document.getElementById("novatarefa").innerHTML = "";
+		doc = document.getElementById("tarefas");
+		doc.innerHTML=localStorage.tarefas;
+	} else {
+		alert("ola");
+		doc = createElement("addtasks");
+		doc.setAttribute("id","novatarefa");
+		doc.innerHTML = '<div name="addtask" class="tarefa" id="a1"><form><textarea name="fname"></textarea><button type="button"' + 'onclick="displayTask(this.form,'+"'"+a1"'"+')">Done</button></form></div>';
+		document.body.appendChild(doc);
+		doc = createElement("div");
+		doc.setAttribute("id","tarefas");
+		document.body.appendChild(doc);
+		
+	}*/
+	</script>
+</head>
+<body role="application">
+	<section role="region">
+		<header>
+			<menu type="toolbar">
+			<a href="javascript:addTask();"><span class="icon icon-add">add</span></a>
+			</menu>
+			<h1>General Tasks</h1>
+		</header>
+	</section>
+	<div id="content"> 
+		<script> 
+			function alternaButton(id,atribute){
+				textarea = document.getElementById(id);
+				doc = textarea.parentNode;
+				button = document.createElement("button");
+				if (atribute==1){
+					button.setAttribute("onclick",'displayTask('+'"'+"a"+id[1]+'"'+')');
+					button.innerHTML="Add";	
+					doc = textarea.parentNode;
+					doc.removeChild(doc.childNodes[1]);
+					doc.appendChild(button);			
+				}
+				else if (textarea.value.match (/\S/));
+				else{
+					button.setAttribute("onclick",'removeAddTask('+'"'+"a"+id[1]+'"'+')');
+					button.innerHTML='<div style="font-weight:10px">Undo</div>';
+					doc = textarea.parentNode;
+					doc.removeChild(doc.childNodes[1]);
+					doc.appendChild(button);
+				}
+			}
+			function alteraStorage(doc,id,obj,check){
+				for (i=0; i<doc.childNodes.length; i++){
+					blocotarefa = doc.childNodes[i];
+					tarefa = blocotarefa.childNodes[0];
+					texto = tarefa.childNodes[1];
+					if (texto.id == id){
+						label = tarefa.childNodes[0];
+						checkbox = label.childNodes[0];
+						if (check) checkbox.setAttribute("checked","");
+						else checkbox.removeAttribute("checked","");
+						texto.innerHTML = obj; 
+						break;
+					}
+				}
+				return doc.innerHTML;
+			}
+			function tarefaFeita(id){
+				tarefa = document.getElementById(id).parentNode;
+				texto = document.getElementById(id);
+				label = tarefa.childNodes[0];
+				checkbox = label.childNodes[0];
+				doc = document.createElement("div");
+				doc.innerHTML = localStorage.tarefas;
+				var obj;
+				var check;
+				if (checkbox.checked == false) {
+					texto.innerHTML = texto.childNodes[0].innerHTML;
+					check = false;
+				}
+				else {
+					texto.innerHTML = "<strike>"+texto.innerHTML+"</strike>";
+					check = true;
+				}
+				obj = texto.innerHTML;
+				localStorage.tarefas = alteraStorage(doc,id,obj,check);
+			}
+			function putDate(id){
+				div = document.getElementById(id);
+				childs = div.childNodes;
+				childs[1].parentNode.removeChild(childs[1]);
+				input = document.createElement("div");
+				input.setAttribute("class","boxdate");
+				input.innerHTML = '<input type="date" id='+'"'+"c"+id[1]+'"'+' placeholder="insert your date">';
+				div.appendChild(input);
+			}
+			function habilitaLixeira(id){
+				//alert(id);
+				blocotarefa = document.getElementById(id).parentNode.parentNode;
+				if (blocotarefa.childNodes[0].style.backgroundColor == ""){
+					blocotarefa.childNodes[0].style.backgroundColor = '#C0D9D9';
+					if (document.getElementById('lixeira')==null){
+						doc = document.createElement("nav");
+						doc.setAttribute("role","toolbar");
+						doc.innerHTML = '<center><button style="float:none" class="delete" id="lixeira" onclick="apagaTarefas()">Delete</button></center>';
+						document.body.appendChild(doc);	
+					}
+				}
+				else {
+					removeLixeira();
+				}
+			}
+			function removeLixeira (){
+					blocotarefa.childNodes[0].style.backgroundColor = "";
+					var qtd = 0;
+					for (i=0;i<document.getElementById("tarefas").childNodes.length;i++){
+						ola = document.getElementById("tarefas").childNodes[i].childNodes[0];
+						if (ola.style.backgroundColor == "rgb(192, 217, 217)") qtd++;
+					}
+					if (qtd == 0){
+						div = document.getElementById('lixeira').parentNode.parentNode;
+						div.parentNode.removeChild(div);
+					}
+			}
+			function apagaTarefas(){
+				var tarefa = document.getElementsByClassName("tarefa"); 
+				j=0; 
+				var mortos = new Array();
+				colorToCompare = "rgb(192, 217, 217)";
+				for (var i=0;i<tarefa.length;i++){ 
+					//alert(tarefa[i].style.backgroundColor);  
+					if (tarefa[i].style.backgroundColor == colorToCompare){ 
+						mortos[j] = tarefa[i].parentNode;
+						j++;  
+						// CheckBox Marcado... Faça alguma coisa... Ex:
+						//alert(aChk[i].value + " marcado.");
+					}
+				}
+				for (var i=0;i<j;i++){
+						paidopai = mortos[i].parentNode;
+						paidopai.removeChild(mortos[i]);
+				}//alert("oi");
+				if (document.getElementsByName("task").length==0 && document.getElementsByName("fname").length==0) addTask();
+				if (document.getElementsByName("task").length==0) localStorage.removeItem("tarefas");
+				else {
+					//alert(document.getElementById("tarefas").innerHTML);
+					localStorage.tarefas = document.getElementById("tarefas").innerHTML;
+				}
+				var qtd = 0;
+				for (i=0;i<document.getElementById("tarefas").childNodes.length;i++){
+					ola = document.getElementById("tarefas").childNodes[i].childNodes[0];
+					if (ola.style.backgroundColor == "rgb(192, 217, 217)") qtd++;
+				}
+				if (qtd == 0){
+					div = document.getElementById('lixeira').parentNode.parentNode;
+					div.parentNode.removeChild(div);
+				}
+				removeLixeira ();
+			}
+			function removeAddTask(id){
+				if (document.getElementsByTagName("button").length!=2 || document.getElementsByClassName("blocotarefa").length>0){
+					div = document.getElementById(id);
+					div.parentNode.removeChild(div);	
+			    }			
+			}
+			function appendElement(id){
+					element = document.createElement("div");
+					element.setAttribute("class","blocoaddtarefa");
+					element.setAttribute("id",id);
+					first = '<div class="addtarefa"><form><textarea onblur="alternaButton('+"'"+'b'+id[1]+"'"+',2)" onfocus="alternaButton('+"'"+'b'+id[1]+"'"+',1)" id='+'"'+'b'+id[1]+'"'+' name="fname"></textarea><button onclick="removeAddTask('+"'"+id+"'"+')"><div style="font-weight:10px">Undo</div></button></form></div><a href="javascript:putDate('+"'"+id+"'"+');" class="press-it-btn">Date?</a>';
+					//alert(first);
+					element.innerHTML=first;
+					div = document.getElementById('novatarefa');
+					div.insertBefore(element, div.firstChild);
+			}
+			function addTask(){
+				//alert("entrei");
+				if (document.getElementById('novatarefa').innerHTML==""){
+					//alert("olamundo!");
+					id = "a1";
+					appendElement(id);
+					//alert(id);
+					//alert(document.getElementById('novatarefa').innerHTML);
+				}
+				else {
+					array = document.getElementsByClassName("blocoaddtarefa");
+					id = array[0].id;
+					id = id.slice(1,id.length);
+					num = parseInt(id) + 1;
+					id = 'a'+num;
+					appendElement(id);
+					//alert(id);
+				}
+			}
+			function displayTask(id){
+				//alert("ok");
+				text = document.getElementById("b"+id[1]).value;
+				date = document.getElementById("c"+id[1]);
+				div = document.getElementById(id);
+			    div.parentNode.removeChild(div);
+			    element = document.createElement("div");
+				element.setAttribute("class","blocotarefa");
+				if (document.getElementById('tarefas').innerHTML==""){
+					tarefaID = "t1";
+				}
+				else {
+					array = document.getElementsByClassName("blocotarefa")[0];
+					tarefaID = array.childNodes[0].childNodes[1].id;
+					tarefaID = tarefaID.slice(1,tarefaID.length);
+					num = parseInt(tarefaID)+1;
+					tarefaID='t'+num;
+				}
+				element.setAttribute("style","cursor: pointer;");
+				element.setAttribute("onclick",'habilitaLixeira('+'"'+tarefaID+'"'+')');
+				if (date==null){
+					element.innerHTML='<div class="tarefa"><label><input type="checkbox" name="task" onclick="tarefaFeita('+"'"+tarefaID+"'"+')"><span></span></label><div id='+'"'+tarefaID+'"'+' name="texto" style="margin: 4px 0 4px 0;float:right;width:85%;">'+text+'</div><div style="clear:both"></div></div>';
+				}
+				else{
+					element.innerHTML='<div class="tarefa" style="margin-bottom:0"><label><input type="checkbox" name="task" onclick="tarefaFeita('+"'"+tarefaID+"'"+')"><span></span></label><div id='+'"'+tarefaID+'"'+' name="texto" style="margin: 4px 0 4px 0;float:right;width:85%;">'+text+'</div><div style="clear:both"></div></div><div class="boxdate" style="height:20px;width:95px;text-align:center;font-weight:bold;color:white;padding-left:0px;background-color:#51A8D0">'+date.value+'</div>';
+				}
+				if (localStorage.tarefas==null) localStorage.tarefas=element.outerHTML;
+				else localStorage.tarefas=element.outerHTML+localStorage.tarefas;
+				div = document.getElementById('tarefas');
+				div.insertBefore(element, div.firstChild);
+			}
+		</script>
+		<addtasks id="novatarefa"><div class="blocoaddtarefa" id="a1"><div class="addtarefa"><form><textarea onblur="alternaButton('b1',2)" onfocus="alternaButton('b1',1)" id="b1" name="fname"></textarea><button onclick="removeAddTask('a1')"><div style="font-weight:10px">Undo</div></button></form></div><a href="javascript:putDate('a1');" class="press-it-btn">Date?</a></div></addtasks>
+		<div id="tarefas"></div>
+		<script>
+			//localStorage.removeItem("tarefas");
+			if (localStorage.tarefas != null){
+				document.getElementById("novatarefa").innerHTML = "";
+				doc = document.getElementById("tarefas");
+				doc.innerHTML=localStorage.tarefas;
+			} 
+    	</script>
+	</div>
+</body>
+</html> 

@@ -1,0 +1,14 @@
+{
+  "name": "Smart Tasks",
+  "description": "Smart Tasks",
+  "launch_path": "/index.html",
+  "developer": {
+    "name": "Thales Carvalho <thales.comp@gmail.com> and Pablo Satler <pablosatler@gmail.com>"
+  },
+  "installs_allowed_from": ["*"],
+  "default_locale": "en-US",
+  "icons": {
+    "60": "/icons/icone.png"
+  },
+  "orientation": "portrait-primary"
+}
